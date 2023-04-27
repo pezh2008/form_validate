@@ -108,7 +108,6 @@ body {
   position: relative;
 }
 
-
 .form-group__svg {
   opacity: 0;
   position: absolute;
@@ -250,4 +249,21 @@ body {
 .error {
   color: #ff2828;
   border-bottom: 2px solid #ff2828;
+}
+
+.test {
+  animation: test 200ms 4;
+}
+
+@keyframes test {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px);
+  }
+  100% {
+    transform: translateX(-20px);
+  }
+  
 }

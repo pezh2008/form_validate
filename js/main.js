@@ -1,6 +1,5 @@
 const REG_EXP_NAME = /^[a-zа-яА-ЯA-Z-]{3,16}$/;
-const REG_EXP_PASSWORD =
-  /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}/g;
+const REG_EXP_PASSWORD = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
 const REG_EXP_EMAIL =
   /^([a-z0-9-]+.)[a-z0-9-]+@[a-z0-9-]+(.[a-z0-9_-]+).[a-z]{2,6}$/;
 
@@ -10,7 +9,8 @@ const lastName = document.querySelector("#last-name");
 const email = document.querySelector("#email");
 const password = document.querySelector("#password");
 const confirmPassword = document.querySelector("#confirm-password");
-
+const inputs = document.querySelectorAll(".form-group__input");
+const btn = document.querySelector(".form__btn");
 const error = (input, message) => {
   input.classList.add("error");
   const parent = input.parentNode;
@@ -25,6 +25,10 @@ const success = (input) => {
   const svg = input.nextElementSibling;
   svg.classList.add("opacity");
 };
+
+btn.addEventListener("animationend", () => {
+  btn.classList.remove("test");
+});
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -62,6 +66,8 @@ form.addEventListener("submit", (e) => {
     error(password, "Поле не может быть пустым");
   } else if (REG_EXP_PASSWORD.test(passwordValue) == false) {
     error(password, "Введите правильный пароль");
+  } else if (passwordValue != confirmValue) {
+    error(password, "Пароли не совпадают");
   } else {
     success(password);
   }
@@ -70,9 +76,25 @@ form.addEventListener("submit", (e) => {
     error(confirmPassword, "Поле не может быть пустым");
   } else if (REG_EXP_PASSWORD.test(confirmValue) == false) {
     error(confirmPassword, "Введите правильный пароль");
+  } else if (confirmValue != passwordValue) {
+    error(confirmPassword, "Пароли не совпадают");
   } else {
     success(confirmPassword);
   }
+  if (
+    firstName.classList.contains("error") ||
+    lastName.classList.contains("error") ||
+    email.classList.contains("error") ||
+    password.classList.contains("error") ||
+    confirmPassword.classList.contains("error")
+  ) {
+    btn.classList.add("test");
+  } else {
+    document.querySelector(".register__form").innerHTML = "";
+    inputs.forEach((el) => {
+      el.value = "";
+    });
 
-
+    console.log("форму  отправляем");
+  }
 });
