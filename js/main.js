@@ -36,7 +36,7 @@ const successRender = (data) => {
         <p class="successs__subtitle">${data.text}</p>
       </div>
       <p class="success__text">Have an account? 
-        <a class="success__link" href="/">Login</a>
+        <a class="success__link" href="/form_validate">Login</a>
       </p>
     </div>
   `;
