@@ -26,6 +26,23 @@ const success = (input) => {
   svg.classList.add("opacity");
 };
 
+const successRender = (data) => {
+  console.log(data);
+  const HTML = `
+    <div class="success">
+      <div></div>
+      <div class="success__info">
+        <h2 class="success__title">${data.title}</h2>
+        <p class="successs__subtitle">${data.text}</p>
+      </div>
+      <p class="success__text">Have an account? 
+        <a class="success__link" href="/">Login</a>
+      </p>
+    </div>
+  `;
+  document.querySelector(".register__form").innerHTML = HTML;
+};
+
 btn.addEventListener("animationend", () => {
   btn.classList.remove("test");
 });
@@ -81,6 +98,7 @@ form.addEventListener("submit", (e) => {
   } else {
     success(confirmPassword);
   }
+
   if (
     firstName.classList.contains("error") ||
     lastName.classList.contains("error") ||
@@ -89,12 +107,23 @@ form.addEventListener("submit", (e) => {
     confirmPassword.classList.contains("error")
   ) {
     btn.classList.add("test");
+    fetch("server-error.json")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        alert(data.error);
+      });
   } else {
-    document.querySelector(".register__form").innerHTML = "";
+    fetch("server-ok.json")
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        successRender(data);
+      });
     inputs.forEach((el) => {
       el.value = "";
     });
-
-    console.log("форму  отправляем");
   }
 });
